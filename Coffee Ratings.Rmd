@@ -26,3 +26,38 @@ theme_set(theme_minimal())
 ```{r}
 coffee_ratings <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-07/coffee_ratings.csv')
 ```
+
+
+## Context
+
+As students at a competitive liberal arts college, we often have to stay up late at night studying and doing homework. This is a major struggle as it is, but we cannot imagine how hard it would be without coffee! Coffee gives us the energy boost we need to get through the long nights and early mornings, and as such, we decided to examine a data set which looks at coffee ratings determined by several different factors. Our aim is to find out which factors go into determining what makes a coffee the 'best'. 
+
+## Data
+
+This data was collected from the Coffee Quality Institute's review pages in January 2018. 
+
+We came across a few data values which were missing. The results were slightly distorted in that the majority of the samples were collected from Arabica coffee producers. There was much more data for Arabica coffee than for Robusta coffee, meaning that comparatively speaking, the results are less likely to be accurate for Robusta coffee, due to its small sample size.
+
+## Research Question
+
+"What factors are the most significant in determining a high overall coffee score?"
+
+## Data Cleaning
+
+Before manipulating our data from the data set, we discovered that there are a number of outliers in the data set which may distort our analysis and results. As such, we have decided to remove all the coffee observations which give an overall coffee score of 0. The code below does this for us:
+
+```{r}
+coffee_ratings <- 
+  coffee_ratings %>% 
+  filter(total_cup_points > 0)
+```
+
+## Data Manipulation
+
+To give us some insight into how the data looks, we believe that it is important to see how the total coffee scores are distributed, to ensure that we have removed all outliers from our data set. 
+
+```{r}
+ggplot(data = coffee_ratings) +
+  geom_histogram(mapping = aes(x = total_cup_points), binwidth = 1) +
+  labs(x = "Overall Coffee Score", y = "Number of Types")
+```
